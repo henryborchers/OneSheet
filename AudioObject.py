@@ -1,8 +1,12 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import AudioMetadata
-import XMPAudioMetadata
+from AudioMetadata import AudioMetadata
+from XMPAudioMetadata import XMPAudioMetadata
 
 
 class AudioObject(AudioMetadata, XMPAudioMetadata):
-    pass
+
+    def __init__(self, filename):
+        print filename
+        super(AudioObject, self).__init__(filename)
+        # super(AudioMetadata, self).__init__(fileName)

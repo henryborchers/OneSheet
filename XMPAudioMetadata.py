@@ -1,10 +1,11 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import XMPMetadata
+from XMPMetadata import XMPMetadata
 
 
 class XMPAudioMetadata(XMPMetadata):
     def __init__(self):
+        print "XMPAudioMetadata start"
         self._getAudioComments = None
         self.___xmpDMAudioSampleRate = None
         self.___xmpDMAudioSampleType = None

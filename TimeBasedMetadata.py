@@ -6,7 +6,12 @@ from ClassFileMetadata import FileMetadata
 
 class TimeBasedMetadata(FileMetadata):
     def __init__(self, filename):
-        super(TimeBasedMetadata, self).__init__(filename)
+        print "Timebased Media start"
+        super(TimeBasedMetadata, self).__init__()
+        # super(FileMetadata, self).__init__(filename)
+        print "Timebased Media ends"
+        pass
+
 
     def getTotalRunningTimeRaw(self):
         return self.___totalRunningTimeRaw

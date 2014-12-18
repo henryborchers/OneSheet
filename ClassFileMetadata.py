@@ -9,20 +9,30 @@ VALID_VIDEO_FILE_EXTENSIONS = ['.avi', '.mov', '.mp4', '.mpeg', '.mpg', '.mkv']
 VALID_AUDIO_FILE_EXTENSIONS = ['.wav', '.mp3', '.ogg']
 VALID_IMAGE_FILE_EXTENSIONS = ['.bmp', '.gif', '.jpg', '.psd', '.tga', '.tif']
 VALID_DOCUMENT_FILE_EXTENSIONS = ['.doc', '.docx', '.pdf', '.txt']
+
+
 class FormatException(Exception):
     def __init__(self, value):
          self.value = value
+
     def __str__(self):
         return self.value
 
+
 class FileMetadata(object):
-    def __init__(self, sourcefile):
-        self.___source = sourcefile
-        self.___fileName = split(sourcefile)[1]
-        self.___filePath = split(sourcefile)[0]
-        self.___metadataDOM = None
+    # def __init__(self, sourcefile):
+    #     print "FileMetadata start"
+    #     self.___source = sourcefile
+    #     self.___fileName = split(sourcefile)[1]
+    #     self.___filePath = split(sourcefile)[0]
+    #     self.___metadataDOM = None
 
-
+    def __init__(self, sasas, sdfasdf):
+        print "FileMetadata start"
+        # self.___source = sourcefile
+        # self.___fileName = split(sourcefile)[1]
+        # self.___filePath = split(sourcefile)[0]
+        # self.___metadataDOM = None
 
     def __validateFileType(self):
         # check file extensions

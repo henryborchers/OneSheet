@@ -6,10 +6,10 @@ __author__ = 'Henry Borchers'
 
 class TestTimeBasedMetadata(TestCase):
     def setUp(self):
-        self.f = TimeBasedMetadata("F:\\sandbox\\dev\\python\\metadata\\Malcolm306.avi")
+        self.f = TimeBasedMetadata("ALLEY_1A.wav")
 
     def test_getFilePath(self):
-        self.assertEqual(self.f.getFilePath(), "F:\\sandbox\\dev\\python\\metadata")
+        self.assertEqual(self.f.getFilePath(), "/Users/lpsdesk/PycharmProjects/Metadata/ALLEY_1A.wav")
 
     def test_getFormatType(self):
         self.assertEqual(self.f.getFormatType(), "video")

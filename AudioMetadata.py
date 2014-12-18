@@ -1,9 +1,15 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import TimeBasedMetadata
+from TimeBasedMetadata import TimeBasedMetadata
 
 
 class AudioMetadata(TimeBasedMetadata):
+    def __init__(self, filename):
+        print "AudioMetadata start"
+        super(AudioMetadata, self).__init__(filename)
+        print "AudioMetadata done"
+        # pass
+
     def getAudioBitDepth(self):
         # TODO Make getAudioBitDepth Method
         pass

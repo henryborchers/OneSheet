@@ -1,11 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import ClassFileMetadata
-import DublinCoreMetadata
-import PDFMetadata
 
+from DublinCoreMetadata import DublinCoreMetadata
+from ClassFileMetadata import FileMetadata
 
-class XMPMetadata(ClassFileMetadata, DublinCoreMetadata, PDFMetadata):
+class XMPMetadata(FileMetadata, DublinCoreMetadata):
     def __init__(self):
         # TODO Make class XMPMetadata constructor
         self.___embeddedXMP = None

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import XMPMetadata
+from XMPMetadata import XMPMetadata
 
 
 class PDFMetadata(XMPMetadata):

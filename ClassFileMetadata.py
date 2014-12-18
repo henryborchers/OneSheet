@@ -22,7 +22,6 @@ class FormatException(Exception):
 class FileMetadata(object):
 
     def __init__(self, sourcefile):
-        print "FileMetadata start"
         self.___source = sourcefile
         self.___fileName = split(sourcefile)[1]
         self.___filePath = split(sourcefile)[0]

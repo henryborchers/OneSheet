@@ -8,5 +8,6 @@ class AudioObject(AudioMetadata, XMPAudioMetadata):
 
     def __init__(self, filename):
         print filename
-        super(AudioObject, self).__init__(filename)
+        # super(AudioObject, self).__init__(filename)
+        AudioMetadata.__init__(self, filename)
         # super(AudioMetadata, self).__init__(fileName)

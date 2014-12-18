@@ -6,7 +6,8 @@ from TimeBasedMetadata import TimeBasedMetadata
 class AudioMetadata(TimeBasedMetadata):
     def __init__(self, filename):
         print "AudioMetadata start"
-        super(AudioMetadata, self).__init__(filename)
+        # super(AudioMetadata, self).__init__(filename)
+        TimeBasedMetadata.__init__(self, filename)
         print "AudioMetadata done"
         # pass
 

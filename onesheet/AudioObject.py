@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from AudioMetadata import AudioMetadata
-from XMPAudioMetadata import XMPAudioMetadata
+from onesheet import AudioMetadata
+from onesheet.XMPAudioMetadata import XMPAudioMetadata
 
 
 class AudioObject(AudioMetadata, XMPAudioMetadata):

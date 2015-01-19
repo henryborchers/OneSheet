@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from DublinCoreMetadata import DublinCoreMetadata
-from ClassFileMetadata import FileMetadata
+from onesheet import DublinCoreMetadata
+from onesheet.ClassFileMetadata import FileMetadata
 
 class XMPMetadata(FileMetadata, DublinCoreMetadata):
     def __init__(self):

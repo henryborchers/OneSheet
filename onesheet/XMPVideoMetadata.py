@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import XMPMetadata
+from onesheet import XMPMetadata
 
 
 class XMPVideoMetadata(XMPMetadata):

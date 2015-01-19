@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import PDFMetadata
-import DocumentMetadata
+from onesheet import PDFMetadata, DocumentMetadata
+
 
 class PDFObject(PDFMetadata, DocumentMetadata):
 	pass

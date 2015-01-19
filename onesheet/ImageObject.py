@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import ImageMetadata
-import XMPImageMetadata
+from onesheet import ImageMetadata, XMPImageMetadata
 
 
 class ImageObject(ImageMetadata, XMPImageMetadata):

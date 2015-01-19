@@ -1,17 +1,17 @@
 from unittest import TestCase
-from ClassFileMetadata import *
+
+from onesheet.TimeBasedMetadata import *
+
+
 __author__ = 'Henry Borchers'
 
 
-class TestFileMetadata(TestCase):
+class TestTimeBasedMetadata(TestCase):
     def setUp(self):
-        self.f = FileMetadata("F:\sandbox\dev\python\metadata\Malcolm306.avi")
-
-    def test_getFileName(self):
-        self.assertEqual(self.f.getFileName(), "Malcolm306.avi")
+        self.f = TimeBasedMetadata("ALLEY_1A.wav")
 
     def test_getFilePath(self):
-        self.assertEqual(self.f.getFilePath(), "F:\\sandbox\\dev\\python\\metadata")
+        self.assertEqual(self.f.getFilePath(), "/Users/lpsdesk/PycharmProjects/Metadata/ALLEY_1A.wav")
 
     def test_getFormatType(self):
         self.assertEqual(self.f.getFormatType(), "video")
@@ -39,3 +39,12 @@ class TestFileMetadata(TestCase):
 
     def test_calculateSHA1(self):
         self.assertEqual(self.f.calculateSHA1(), "dbd2af5e2d1b3146ce8578fdd63488152405efcb")
+
+    def test_getTotalRunningTimeRaw(self):
+        self.assertEqual(self.f.getTotalRunningTimeRaw(), "ddd")
+
+    def test_getTotalRunningTimeSMPTE(self):
+        self.fail()
+
+    def test_getTotalSeconds(self):
+        self.fail()

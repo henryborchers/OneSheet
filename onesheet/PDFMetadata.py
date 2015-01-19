@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from XMPMetadata import XMPMetadata
+from onesheet import XMPMetadata
 
 
 class PDFMetadata(XMPMetadata):

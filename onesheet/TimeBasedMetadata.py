@@ -1,10 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from os.path import split
 from subprocess import Popen, PIPE, STDOUT
 from re import search, DOTALL
 from xml.dom.minidom import parseString
-from ClassFileMetadata import FileMetadata
+
+from onesheet.ClassFileMetadata import FileMetadata
 
 
 class TimeBasedMetadata(FileMetadata):

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import ClassFileMetadata
+from onesheet import ClassFileMetadata
 
 
 class ImageMetadata(ClassFileMetadata):

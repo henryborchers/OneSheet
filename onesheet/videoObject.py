@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import AudioMetadata
-import VideoMetadata
-import XMPVideoMetadata
+from onesheet import XMPVideoMetadata, VideoMetadata, AudioMetadata
 
 
 class videoObject(AudioMetadata, VideoMetadata, XMPVideoMetadata):

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import TimeBasedMetadata
+from onesheet import TimeBasedMetadata
 
 
 class VideoMetadata(TimeBasedMetadata):

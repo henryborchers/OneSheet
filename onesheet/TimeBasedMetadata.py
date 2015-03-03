@@ -12,7 +12,7 @@ class TimeBasedMetadata(FileMetadata):
         FileMetadata.__init__(self,filename)
         self.GET_XML_COMMAND = 'ffprobe -print_format xml -show_streams'.split()
         self.fileName = filename
-        if self.getFormatType() == 'audio' or self.getFormatType() == 'video':
+        if self.format_type == 'audio' or self.format_type == 'video':
             command = self.GET_XML_COMMAND
             command.append(self.fileName)
             p = Popen(command, stdout=PIPE, stderr=STDOUT, bufsize=0)

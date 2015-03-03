@@ -55,21 +55,20 @@ class FileMetadata(object):
             num /= 1024.0
 
 
-    def getFileName(self):
-
+    @property
+    def file_name(self):
         return self.___fileName
 
-
-    def getFilePath(self):
+    @property
+    def file_path(self):
         return self.___filePath
 
-
-    def getFileExtension(self):
-
+    @property
+    def file_extension(self):
         return str(splitext(self.___source)[1])
 
-
-    def getFormatType(self):
+    @property
+    def format_type(self):
         #check if it's an audio format
         for extension in VALID_AUDIO_FILE_EXTENSIONS:
             if extension in self.___source:
@@ -81,28 +80,26 @@ class FileMetadata(object):
                 return "video"
         return "unknown"
 
-
-    def getFileSize(self):
+    @property
+    def file_size(self):
         return getsize(self.___source)
 
-
-    def getFileSizeH(self):
+    @property
+    def file_size_human(self):
         return self.__sizeofHuman(getsize(self.___source))
 
-
-    def getDateCreated(self):
+    @property
+    def date_created(self):
         return ctime(getctime(self.___source))
 
-
-    def getDateLastModified(self):
+    @property
+    def date_last_modified(self):
         return ctime(getmtime(self.___source))
-
 
     def getXML(self):
         pass
 
-
-    def calculateMD5(self):
+    def calculate_MD5(self):
         md5 = hashlib.md5()
         with open(self.___source,'rb') as f:
             for chunk in iter(lambda: f.read(8192), b''):
@@ -110,7 +107,7 @@ class FileMetadata(object):
         return md5.hexdigest()
 
 
-    def calculateSHA1(self):
+    def calculate_SHA1(self):
         sha1 = hashlib.sha1()
         with open(self.___source,'rb') as f:
             for chunk in iter(lambda: f.read(8192), b''):

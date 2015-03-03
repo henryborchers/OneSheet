@@ -1,9 +1,14 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from onesheet import TimeBasedMetadata
+from onesheet.TimeBasedMetadata import TimeBasedMetadata
 
 
 class VideoMetadata(TimeBasedMetadata):
+
+    def __init__(self, filename):
+        TimeBasedMetadata.__init__(self, filename)
+        pass
+
     def __convertFrameToNDF(self, aFrameNumber):
         pass
 

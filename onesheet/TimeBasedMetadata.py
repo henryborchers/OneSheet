@@ -9,7 +9,7 @@ from onesheet.ClassFileMetadata import FileMetadata
 
 class TimeBasedMetadata(FileMetadata):
     def __init__(self, filename):
-        FileMetadata.__init__(self,filename)
+        FileMetadata.__init__(self, filename)
         self.GET_XML_COMMAND = 'ffprobe -print_format xml -show_streams'.split()
         self.fileName = filename
         if self.format_type == 'audio' or self.format_type == 'video':
@@ -22,7 +22,8 @@ class TimeBasedMetadata(FileMetadata):
 
 
     def getTotalRunningTimeRaw(self):
-        return self.___totalRunningTimeRaw
+        pass
+        # return self.___totalRunningTimeRaw
 
     def getTotalRunningTimeSMPTE(self):
         #TODO create SMPTE TRT return

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from onesheet import TimeBasedMetadata
+from onesheet.TimeBasedMetadata import TimeBasedMetadata
 
 AUDIO_CODECS = {"8svx_exp": "8SVX",
                     "8svx_fib": "8SVX",

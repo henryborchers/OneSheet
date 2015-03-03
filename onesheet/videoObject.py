@@ -1,7 +1,14 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from onesheet import XMPVideoMetadata, VideoMetadata, AudioMetadata
 
+# from onesheet.XMPVideoMetadata import XMPMetadata
+from onesheet.VideoMetadata import VideoMetadata
+from onesheet.AudioMetadata import AudioMetadata
 
-class videoObject(AudioMetadata, VideoMetadata, XMPVideoMetadata):
+# class VideoObject(AudioMetadata, VideoMetadata, XMPVideoMetadata):
+class VideoObject(VideoMetadata):
+
+    def __init__(self, filename):
+        VideoMetadata.__init__(self, filename)
+
     pass

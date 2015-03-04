@@ -3,13 +3,14 @@
 import hashlib
 
 from os.path import split, splitext, getctime, getsize, getmtime
+from sys import stdout
 from time import ctime
 
 VALID_VIDEO_FILE_EXTENSIONS = ['.avi', '.mov', '.mp4', '.mpeg', '.mpg', '.mkv']
 VALID_AUDIO_FILE_EXTENSIONS = ['.wav', '.mp3', '.ogg']
 VALID_IMAGE_FILE_EXTENSIONS = ['.bmp', '.gif', '.jpg', '.psd', '.tga', '.tif']
 VALID_DOCUMENT_FILE_EXTENSIONS = ['.doc', '.docx', '.pdf', '.txt']
-
+BUFFER = 8192
 
 class FormatException(Exception):
     def __init__(self, value):
@@ -99,20 +100,34 @@ class FileMetadata(object):
     def getXML(self):
         pass
 
-    def calculate_MD5(self):
+    def calculate_MD5(self, verbose=False):
         md5 = hashlib.md5()
+        total = self.file_size
         with open(self.___source,'rb') as f:
-            for chunk in iter(lambda: f.read(8192), b''):
+            i = float(0)
+
+            for chunk in iter(lambda: f.read(BUFFER), b''):
+                if verbose:
+                    i += BUFFER
+                    completed = int((i/total)*100)
+                    print str(completed) + "%"
                 md5.update(chunk)
         return md5.hexdigest()
 
 
-    def calculate_SHA1(self):
+    def calculate_SHA1(self, verbose=False):
         sha1 = hashlib.sha1()
+        total = self.file_size
+
         with open(self.___source,'rb') as f:
-            for chunk in iter(lambda: f.read(8192), b''):
+            i = float(0)
+            for chunk in iter(lambda: f.read(BUFFER), b''):
+                if verbose:
+                    i += BUFFER
+                    completed = int((i/total)*100)
+                    print str(completed) + "%"
                 sha1.update(chunk)
 
         return sha1.hexdigest()
 
-
+# TODO add a class for better progress reporting

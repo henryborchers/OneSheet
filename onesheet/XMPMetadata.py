@@ -3,8 +3,9 @@
 
 from onesheet import DublinCoreMetadata
 from onesheet.ClassFileMetadata import FileMetadata
-
+from abc import ABCMeta
 class XMPMetadata(FileMetadata, DublinCoreMetadata):
+    __metaclass__ = ABCMeta
     def __init__(self):
         # TODO Make class XMPMetadata constructor
         self.___embeddedXMP = None

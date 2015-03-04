@@ -5,6 +5,7 @@ import hashlib
 from os.path import split, splitext, getctime, getsize, getmtime
 from sys import stdout
 from time import ctime
+from abc import ABCMeta
 
 VALID_VIDEO_FILE_EXTENSIONS = ['.avi', '.mov', '.mp4', '.mpeg', '.mpg', '.mkv']
 VALID_AUDIO_FILE_EXTENSIONS = ['.wav', '.mp3', '.ogg']
@@ -21,7 +22,7 @@ class FormatException(Exception):
 
 
 class FileMetadata(object):
-
+    __metaclass__ = ABCMeta
     def __init__(self, sourcefile):
         self.___source = sourcefile
         self.___fileName = split(sourcefile)[1]

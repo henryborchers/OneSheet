@@ -5,9 +5,10 @@ from re import search, DOTALL
 from xml.dom.minidom import parseString
 
 from onesheet.ClassFileMetadata import FileMetadata
-
+from abc import ABCMeta
 
 class TimeBasedMetadata(FileMetadata):
+    __metaclass__ = ABCMeta
     def __init__(self, filename):
         FileMetadata.__init__(self, filename)
         self.GET_XML_COMMAND = 'ffprobe -print_format xml -show_streams'.split()

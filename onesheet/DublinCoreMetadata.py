@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
+from abc import ABCMeta
 class DublinCoreMetadata(object):
+    __metaclass__ = ABCMeta
     def __init__(self):
         self.___dcContributor = None
         self.___dcCoverage = None

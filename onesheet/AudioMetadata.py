@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 from onesheet.TimeBasedMetadata import TimeBasedMetadata
-
+from abc import ABCMeta
 AUDIO_CODECS = {"8svx_exp": "8SVX",
                     "8svx_fib": "8SVX",
                     "aac": "AAC",
@@ -173,6 +173,7 @@ AUDIO_BIT_DEPTHS = {"u8": "8",
                     "dblp": ""}
 
 class AudioMetadata(TimeBasedMetadata):
+    __metaclass__ = ABCMeta
     AUDIO_CODECS = {"8svx_exp": "8SVX",
                     "8svx_fib": "8SVX",
                     "aac": "AAC",

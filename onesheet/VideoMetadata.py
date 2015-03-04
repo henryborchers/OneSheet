@@ -1,9 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 from onesheet.TimeBasedMetadata import TimeBasedMetadata
-
+from abc import ABCMeta
 
 class VideoMetadata(TimeBasedMetadata):
+    __metaclass__ = ABCMeta
 
     def __init__(self, filename):
         TimeBasedMetadata.__init__(self, filename)

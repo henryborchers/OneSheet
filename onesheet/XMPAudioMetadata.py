@@ -2,8 +2,9 @@
 # -*- coding: UTF-8 -*-
 from onesheet import XMPMetadata
 
-
+from abc import ABCMeta
 class XMPAudioMetadata(XMPMetadata):
+    __metaclass__ = ABCMeta
     def __init__(self):
         print "XMPAudioMetadata start"
         self._getAudioComments = None

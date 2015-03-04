@@ -40,7 +40,7 @@ class TimeBasedMetadata(FileMetadata):
 
         m, s = divmod(seconds, 60)
         h, m = divmod(m, 60)
-        return str(int(h)).zfill(2) + ":" + str(int(m)).zfill(2) + ":" + str(int(s)).zfill(0)
+        return str(int(h)).zfill(2) + ":" + str(int(m)).zfill(2) + ":" + str(int(s)).zfill(2)
         pass
 
     @property

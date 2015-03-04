@@ -20,16 +20,32 @@ class TimeBasedMetadata(FileMetadata):
             self.fileXML = str(search('(<\?xml).*(</ffprobe>)', self.rawdata, DOTALL).group(0))
             self.xmlDom = parseString(self.fileXML)
 
-
-    def getTotalRunningTimeRaw(self):
+    @property
+    def totalRunningTimeRaw(self):
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+                if stream.getAttribute("codec_type") == "audio":
+                    return float(stream.getAttribute("duration"))
+        # print self.fileXML
+    #     return self.___totalRunningTimeRaw
         pass
-        # return self.___totalRunningTimeRaw
 
-    def getTotalRunningTimeSMPTE(self):
-        #TODO create SMPTE TRT return
+    @property
+    def totalRunningTimeSMPTE(self):
+
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+                if stream.getAttribute("codec_type") == "audio":
+                    seconds = float(stream.getAttribute("duration"))#TODO create SMPTE TRT return
+                    break
+
+        m, s = divmod(seconds, 60)
+        h, m = divmod(m, 60)
+        return str(int(h)).zfill(2) + ":" + str(int(m)).zfill(2) + ":" + str(int(s)).zfill(0)
         pass
 
-    def getTotalSeconds(self):
-        #TODO Create a total number of seconds
+    @property
+    def totalSeconds(self):
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+                if stream.getAttribute("codec_type") == "audio":
+                    return float(stream.getAttribute("duration"))
         pass
 

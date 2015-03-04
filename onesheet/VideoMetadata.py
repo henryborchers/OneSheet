@@ -29,7 +29,7 @@ class VideoMetadata(TimeBasedMetadata):
                     return stream.getAttribute("codec_name")
 
     @property
-    def getVideoCodecLongName(self):
+    def videoCodecLongName(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
                 if stream.getAttribute("codec_type") == "video":
                     return stream.getAttribute("codec_long_name")
@@ -67,8 +67,6 @@ class VideoMetadata(TimeBasedMetadata):
         for stream in self.xmlDom.getElementsByTagName('stream'):
                 if stream.getAttribute("codec_type") == "video":
                     return int(stream.getAttribute("bit_rate"))
-        # TODO Make getAudioBitDepth Method
-        pass
 
     @property
     def videoBitRateH(self):
@@ -76,16 +74,24 @@ class VideoMetadata(TimeBasedMetadata):
                 if stream.getAttribute("codec_type") == "video":
                     return self.__sizeofHuman(int(stream.getAttribute("bit_rate")))+"/s"
 
-    def getVideoResolution(self):
-        # TODO Make getVideoResolution method
-        pass
+    @property
+    def videoResolution(self):
+            for stream in self.xmlDom.getElementsByTagName('stream'):
+                if stream.getAttribute("codec_type") == "video":
+                    height = stream.getAttribute("height")
+                    width = stream.getAttribute("width")
+                    return width + " x " + height
 
-    def getVideoResolutionHeight(self):
-        # TODO Make getVideoResolutionHeight method
-        pass
+    @property
+    def videoResolutionHeight(self):
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+                if stream.getAttribute("codec_type") == "video":
+                    return int(stream.getAttribute("height"))
 
-    def getVideoRespolutionWidth(self):
-        # TODO Make getVideoResolutionWidth method
-        pass
+    @property
+    def videoRespolutionWidth(self):
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+                if stream.getAttribute("codec_type") == "video":
+                    return int(stream.getAttribute("width"))
 
 

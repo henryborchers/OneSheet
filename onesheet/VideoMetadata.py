@@ -15,25 +15,44 @@ class VideoMetadata(TimeBasedMetadata):
     def __convertFrameToDF(self, aFrameNumber):
         pass
 
-    def getVideoCodec(self):
-        # TODO Make getVideoCodec method
-        pass
+    def __sizeofHuman(self, num):
+        num = int(num)
+        for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
+            if num < 1024.0:
+                return "%3.1f %s" % (num, x)
+            num /= 1024.0
 
+    @property
+    def videoCodec(self):
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+                if stream.getAttribute("codec_type") == "video":
+                    return stream.getAttribute("codec_name")
+
+    @property
     def getVideoCodecLongName(self):
-        # TODO Make getVideoCodecLongName method
-        pass
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+                if stream.getAttribute("codec_type") == "video":
+                    return stream.getAttribute("codec_long_name")
+    @property
+    def videoCodecTagString(self):
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+                if stream.getAttribute("codec_type") == "video":
+                    return stream.getAttribute("codec_tag_string")
 
-    def getVideoCodecTagString(self):
-        # TODO Make getVideoCodecTagString method
-        pass
 
-    def getVideoCodecTag(self):
-        # TODO Make getVideoCodecTag method
-        pass
+    @property
+    def videoCodecTag(self):
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+                if stream.getAttribute("codec_type") == "video":
+                    return stream.getAttribute("codec_tag")
 
-    def getVideoFrameRate(self):
-        # TODO Make getVideoFrameRate method
-        pass
+    @property
+    def videoFrameRate(self):
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+                if stream.getAttribute("codec_type") == "video":
+                    return stream.getAttribute("r_frame_rate")
+
+
 
     def getVideoColorSpace(self):
         # TODO Make getVideoColorSpace method
@@ -43,16 +62,19 @@ class VideoMetadata(TimeBasedMetadata):
         # TODO Make getVideoColorSampling method
         pass
 
-    def getVideoBitRate(self):
+    @property
+    def videoBitRate(self):
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+                if stream.getAttribute("codec_type") == "video":
+                    return int(stream.getAttribute("bit_rate"))
         # TODO Make getAudioBitDepth Method
         pass
 
-    def getVideoBitRate(self):
-        # TODO Make getAudioBitDepth Method
-        pass
-    def getVideoBitRateH(self):
-        # TODO Make getVideoBitRateH method
-        pass
+    @property
+    def videoBitRateH(self):
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+                if stream.getAttribute("codec_type") == "video":
+                    return self.__sizeofHuman(int(stream.getAttribute("bit_rate")))+"/s"
 
     def getVideoResolution(self):
         # TODO Make getVideoResolution method

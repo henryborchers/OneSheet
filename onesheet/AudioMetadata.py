@@ -346,37 +346,38 @@ class AudioMetadata(TimeBasedMetadata):
     def __init__(self, filename):
         TimeBasedMetadata.__init__(self, filename)
 
-    def getAudioBitDepth(self):
-        # TODO Make getAudioBitDepth Method
+    @property
+    def audioBitDepth(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
             if stream.getAttribute("codec_type") == "audio":
                 return int(AUDIO_BIT_DEPTHS[stream.getAttribute("sample_fmt")])
-        pass
 
-    def getAudioChannels(self):
+    @property
+    def audioChannels(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
                 if stream.getAttribute("codec_type") == "audio":
                     return int(stream.getAttribute("channels"))
-        pass
 
-    def getAudioCodec(self):
+    @property
+    def audioCodec(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
             if stream.getAttribute("codec_type") == "audio":
                 return str(AUDIO_CODECS[stream.getAttribute("codec_name")])
 
 
-    def getAudioCodecLongName(self):
+    @property
+    def audioCodecLongName(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
             if stream.getAttribute("codec_type") == "audio":
                 return str(stream.getAttribute("codec_long_name"))
 
-    def getAudioSampleRate(self):
-        # TODO Make getAudioSampleRate Method
+    @property
+    def audioSampleRate(self):
+        # TODO Make audioSampleRate Method
         for stream in self.xmlDom.getElementsByTagName('stream'):
             if stream.getAttribute("codec_type") == "audio":
                 return int(stream.getAttribute("sample_rate"))
 
-        pass
 
 
 

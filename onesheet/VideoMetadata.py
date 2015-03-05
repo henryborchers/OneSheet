@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
+from re import search
 from onesheet.TimeBasedMetadata import TimeBasedMetadata
 from abc import ABCMeta
 
@@ -8,7 +9,7 @@ class VideoMetadata(TimeBasedMetadata):
 
     def __init__(self, filename):
         TimeBasedMetadata.__init__(self, filename)
-        pass
+
 
     def __convertFrameToNDF(self, aFrameNumber):
         pass
@@ -51,7 +52,10 @@ class VideoMetadata(TimeBasedMetadata):
     def videoFrameRate(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
                 if stream.getAttribute("codec_type") == "video":
-                    return stream.getAttribute("r_frame_rate")
+                    top = float(stream.getAttribute("r_frame_rate").split('/')[0])
+                    bottom = float(stream.getAttribute("r_frame_rate").split('/')[1])
+
+                    return top/bottom
 
 
 
@@ -90,9 +94,13 @@ class VideoMetadata(TimeBasedMetadata):
                     return int(stream.getAttribute("height"))
 
     @property
-    def videoRespolutionWidth(self):
+    def videoResolutionWidth(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
                 if stream.getAttribute("codec_type") == "video":
                     return int(stream.getAttribute("width"))
 
-
+    @property
+    def videoAspectRatio(self):
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+                if stream.getAttribute("codec_type") == "video":
+                    return str(stream.getAttribute("display_aspect_ratio"))

@@ -4,8 +4,11 @@ import hashlib
 
 from os.path import split, splitext, getctime, getsize, getmtime
 from sys import stdout
-from time import ctime
+import threading
+from time import ctime, sleep
 from abc import ABCMeta
+import thread
+import sys
 
 VALID_VIDEO_FILE_EXTENSIONS = ['.avi', '.mov', '.mp4', '.mpeg', '.mpg', '.mkv']
 VALID_AUDIO_FILE_EXTENSIONS = ['.wav', '.mp3', '.ogg']
@@ -19,6 +22,45 @@ class FormatException(Exception):
 
     def __str__(self):
         return self.value
+
+class MD5_Generator(threading.Thread):
+    def __init__(self, file):
+        threading.Thread.__init__(self)
+        self.file = file
+        self.total = getsize(file)
+        self.isRunning = False
+        self.completed = 0
+        self.md5 = hashlib.md5()
+
+    @property
+    def running(self):
+        return self.isRunning
+
+    @property
+    def progress(self):
+        return self.completed
+
+    @property
+    def getChecksum(self):
+        return self.md5.hexdigest()
+
+    def run(self):
+        # self.verbose = True
+        # self.file = file
+        # print("starting")
+        print self.file
+        print("starting md5")
+        self.isRunning = True
+        with open(self.file, 'rb') as f:
+            i = float(0)
+
+            for chunk in iter(lambda: f.read(BUFFER), b''):
+                i += BUFFER
+                self.completed = int((i/self.total)*100)
+                self.md5.update(chunk)
+
+        self.isRunning = False
+
 
 
 class FileMetadata(object):
@@ -101,19 +143,29 @@ class FileMetadata(object):
     def getXML(self):
         pass
 
+
+
     def calculate_MD5(self, verbose=False):
         md5 = hashlib.md5()
-        total = self.file_size
-        with open(self.___source,'rb') as f:
-            i = float(0)
+        # total = self.file_size
 
-            for chunk in iter(lambda: f.read(BUFFER), b''):
-                if verbose:
-                    i += BUFFER
-                    completed = int((i/total)*100)
-                    print str(completed) + "%"
-                md5.update(chunk)
-        return md5.hexdigest()
+        # checksum = MD5_Generator(self.___source, verbose=True)
+        checksum = MD5_Generator(self.___source)
+        checksum.start()
+        while checksum.running == True:
+            # print checksum.running
+            sleep(2)
+            if verbose == True:
+                # print checksum.progress
+                message = str(checksum.progress) + "%"
+                print(message)
+                # sys.stdout.write(str(checksum.progress))
+                sys.stdout.flush()
+        checksum.join()
+
+
+        md5 = checksum.getChecksum
+        return md5
 
 
     def calculate_SHA1(self, verbose=False):

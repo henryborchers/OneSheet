@@ -22,6 +22,11 @@ class TimeBasedMetadata(FileMetadata):
             self.xmlDom = parseString(self.fileXML)
 
     @property
+    def Rawdata(self):
+        return self.rawdata
+
+
+    @property
     def totalRunningTimeRaw(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
                 if stream.getAttribute("codec_type") == "audio":

@@ -45,11 +45,7 @@ class MD5_Generator(threading.Thread):
         return self.md5.hexdigest()
 
     def run(self):
-        # self.verbose = True
-        # self.file = file
-        # print("starting")
-        print self.file
-        # print("starting md5")
+
         self.isRunning = True
         with open(self.file, 'rb') as f:
             i = float(0)

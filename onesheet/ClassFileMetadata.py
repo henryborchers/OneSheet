@@ -49,7 +49,7 @@ class MD5_Generator(threading.Thread):
         # self.file = file
         # print("starting")
         print self.file
-        print("starting md5")
+        # print("starting md5")
         self.isRunning = True
         with open(self.file, 'rb') as f:
             i = float(0)

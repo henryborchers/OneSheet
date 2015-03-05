@@ -63,8 +63,27 @@ class VideoMetadata(TimeBasedMetadata):
         # TODO Make getVideoColorSpace method
         pass
 
-    def getVideoColorSampling(self):
-        # TODO Make getVideoColorSampling method
+    @property
+    def videoColorDepth(self):
+        # TODO Make videoColorDepth method useful
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+            if stream.getAttribute("codec_type") == "video":
+                if stream.getAttribute("codec_long_name") == "Uncompressed 4:2:2 10-bit":
+                    return 10
+                else:
+                    return 'unknown'
+
+        pass
+
+    @property
+    def videoColorSampling(self):
+        # TODO Make VideoColorSampling method useful
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+                if stream.getAttribute("codec_type") == "video":
+                    if stream.getAttribute("codec_long_name") == "Uncompressed 4:2:2 10-bit":
+                        return '4:2:2'
+                    else:
+                        return 'unknown'
         pass
 
     @property

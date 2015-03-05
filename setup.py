@@ -11,7 +11,6 @@ for quality assurance purposes)
 To Install
 ----------
 
-.. code::
     $ pip install OneSheet
 
 
@@ -22,7 +21,7 @@ from setuptools import setup
 
 setup(
     name='OneSheet',
-    version='0.1.1',
+    version='0.1.3.3',
     description='Easily access metadata for image, video, sound, and document file.',
     long_description=__doc__,
     url='https://github.com/henryborchers/OneSheet',

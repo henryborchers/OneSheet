@@ -141,23 +141,27 @@ class FileMetadata(object):
 
 
 
-    def calculate_MD5(self, verbose=False):
+    def calculate_MD5(self, progress=False):
         md5 = hashlib.md5()
         # total = self.file_size
 
-        # checksum = MD5_Generator(self.___source, verbose=True)
+        # checksum = MD5_Generator(self.___source, progress=True)
         checksum = MD5_Generator(self.___source)
         checksum.start()
         while checksum.running == True:
             # print checksum.running
-            sleep(2)
-            if verbose == True:
+            sleep(.25)
+            if progress == True:
                 # print checksum.progress
                 message = str(checksum.progress) + "%"
-                print(message)
-                # sys.stdout.write(str(checksum.progress))
+                # print(message),
+                sys.stdout.write('\r' + message)
                 sys.stdout.flush()
         checksum.join()
+        if progress == True:
+            sys.stdout.write("\r\033[K\r")
+            sleep(.5)
+            sys.stdout.flush()
 
 
         md5 = checksum.getChecksum

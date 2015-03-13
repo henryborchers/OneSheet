@@ -147,6 +147,7 @@ class FileMetadata(object):
 
         # checksum = MD5_Generator(self.___source, progress=True)
         checksum = MD5_Generator(self.___source)
+        checksum.daemon = True
         checksum.start()
         while checksum.running == True:
             # print checksum.running

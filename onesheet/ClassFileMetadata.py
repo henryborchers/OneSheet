@@ -32,13 +32,16 @@ class MD5_Generator(threading.Thread):
         self.completed = 0
         self.md5 = hashlib.md5()
 
+
     @property
     def running(self):
         return self.isRunning
 
     @property
     def progress(self):
-        return self.completed
+        progress_lock = threading.Lock()
+        with progress_lock:
+            return self.completed
 
     @property
     def getChecksum(self):
@@ -66,6 +69,9 @@ class FileMetadata(object):
         self.___fileName = split(sourcefile)[1]
         self.___filePath = split(sourcefile)[0]
         self.___metadataDOM = None
+        self._calculation_progress = 0
+        self._calculation = None
+        self._MD5 = None
 
     def __validateFileType(self):
         # check file extensions
@@ -94,6 +100,16 @@ class FileMetadata(object):
                 return "%3.1f %s" % (num, x)
             num /= 1024.0
 
+    @property
+    def isMD5Calculating(self):
+        if self._calculation:
+            return self._calculation.isAlive()
+        else:
+            return False
+
+    @property
+    def calulation_progresss(self):
+        return self._calculation_progress
 
     @property
     def file_name(self):
@@ -136,25 +152,38 @@ class FileMetadata(object):
     def date_last_modified(self):
         return ctime(getmtime(self.___source))
 
+    @property
+    def MD5_hash(self):
+        if self._MD5:
+            return self._MD5
+        elif self._calculation.isAlive:
+            self._calculation.join()
+            # self._MD5 = self.calculation
+            return self._MD5
+        else:
+            raise Exception("MD5 not calculated yet")
+
     def getXML(self):
         pass
 
 
-
-    def calculate_MD5(self, progress=False):
-        md5 = hashlib.md5()
+    def _calculate_MD5(self, progress):
+        MD5 = hashlib.md5()
+        # print "start"
+        sleep(1)
         # total = self.file_size
-
         # checksum = MD5_Generator(self.___source, progress=True)
         checksum = MD5_Generator(self.___source)
         checksum.daemon = True
         checksum.start()
-        while checksum.running == True:
+        # while checksum.running == True:
+        while checksum.isRunning:
             # print checksum.running
             sleep(.25)
+            self._calculation_progress = checksum.progress
             if progress == True:
                 # print checksum.progress
-                message = str(checksum.progress) + "%"
+                message = str(self._calculation_progress) + "%"
                 # print(message),
                 sys.stdout.write('\r' + message)
                 sys.stdout.flush()
@@ -163,10 +192,18 @@ class FileMetadata(object):
             sys.stdout.write("\r\033[K\r")
             sleep(.5)
             sys.stdout.flush()
+        self._MD5 = checksum.getChecksum
+        return self._MD5
 
-
-        md5 = checksum.getChecksum
-        return md5
+    def calculate_MD5(self, progress=False, threaded=False):
+        if threaded:
+            self._calculation = threading.Thread(target=self._calculate_MD5, args=(progress,))
+            self._calculation.daemon = True
+            self._calculation.start()
+        else:
+            MD5 = self._calculate_MD5(progress)
+            self._MD5 = MD5
+            return MD5
 
 
     def calculate_SHA1(self, verbose=False):

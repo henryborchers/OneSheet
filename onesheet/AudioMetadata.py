@@ -347,11 +347,18 @@ class AudioMetadata(TimeBasedMetadata):
     def __init__(self, filename):
         TimeBasedMetadata.__init__(self, filename)
 
+    def __sizeofHuman(self, num):
+        num = int(num)
+        for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
+            if num < 1024.0:
+                return "%3.1f %s" % (num, x)
+            num /= 1024.0
+
     @property
     def audioBitDepth(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
             if stream.getAttribute("codec_type") == "audio":
-                return int(AUDIO_BIT_DEPTHS[stream.getAttribute("bits_per_sample")])
+                return int(AUDIO_BIT_DEPTHS[stream.getAttribute("sample_fmt")])
 
     @property
     def audioChannels(self):
@@ -379,6 +386,14 @@ class AudioMetadata(TimeBasedMetadata):
             if stream.getAttribute("codec_type") == "audio":
                 return int(stream.getAttribute("sample_rate"))
 
+    @property
+    def audioBitRate(self):
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+            if stream.getAttribute("codec_type") == "audio":
+                return int(stream.getAttribute("bit_rate"))
 
-
-
+    @property
+    def audioBitRateH(self):
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+            if stream.getAttribute("codec_type") == "audio":
+                return self.__sizeofHuman(int(stream.getAttribute("bit_rate")))

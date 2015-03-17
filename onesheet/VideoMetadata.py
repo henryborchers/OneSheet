@@ -62,7 +62,8 @@ class VideoMetadata(TimeBasedMetadata):
     def videoColorSpace(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
                 if stream.getAttribute("codec_type") == "video":
-                    return str(stream.getAttribute("color_space"))
+                    if stream.getAttribute("color_space"):
+                        return str(stream.getAttribute("color_space"))
         pass
 
     @property

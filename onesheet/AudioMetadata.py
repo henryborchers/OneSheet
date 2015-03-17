@@ -351,7 +351,7 @@ class AudioMetadata(TimeBasedMetadata):
     def audioBitDepth(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
             if stream.getAttribute("codec_type") == "audio":
-                return int(AUDIO_BIT_DEPTHS[stream.getAttribute("sample_fmt")])
+                return int(AUDIO_BIT_DEPTHS[stream.getAttribute("bits_per_sample")])
 
     @property
     def audioChannels(self):

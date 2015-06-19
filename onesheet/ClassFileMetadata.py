@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import hashlib
+import os
 
 from os.path import split, splitext, getctime, getsize, getmtime
 from sys import stdout
@@ -9,6 +10,7 @@ from time import ctime, sleep
 from abc import ABCMeta
 import thread
 import sys
+from OExceptions import FormatException, NoDataException
 
 VALID_VIDEO_FILE_EXTENSIONS = ['.avi', '.mov', '.mp4', '.mpeg', '.mpg', '.mkv']
 VALID_AUDIO_FILE_EXTENSIONS = ['.wav', '.mp3', '.ogg']
@@ -16,12 +18,7 @@ VALID_IMAGE_FILE_EXTENSIONS = ['.bmp', '.gif', '.jpg', '.psd', '.tga', '.tif']
 VALID_DOCUMENT_FILE_EXTENSIONS = ['.doc', '.docx', '.pdf', '.txt']
 BUFFER = 8192
 
-class FormatException(Exception):
-    def __init__(self, value):
-         self.value = value
 
-    def __str__(self):
-        return self.value
 
 class MD5_Generator(threading.Thread):
     def __init__(self, file):
@@ -65,6 +62,8 @@ class MD5_Generator(threading.Thread):
 class FileMetadata(object):
     __metaclass__ = ABCMeta
     def __init__(self, sourcefile):
+        if not os.path.exists(sourcefile):
+            raise IOError(sourcefile + " not found")
         self.___source = sourcefile
         self.___fileName = split(sourcefile)[1]
         self.___filePath = split(sourcefile)[0]
@@ -126,30 +125,38 @@ class FileMetadata(object):
     @property
     def format_type(self):
         #check if it's an audio format
-        for extension in VALID_AUDIO_FILE_EXTENSIONS:
-            if extension in self.___source:
-                return "audio"
+        extension = os.path.splitext(self.___source)[1]
+        if any(extension in x for x in VALID_AUDIO_FILE_EXTENSIONS):
+            return "audio"
 
         #check if it's a video format
-        for extension in VALID_VIDEO_FILE_EXTENSIONS:
-            if extension in self.___source:
-                return "video"
-        return "unknown"
+        elif any(extension in x for x in VALID_VIDEO_FILE_EXTENSIONS):
+            return "video"
+        else:
+            raise FormatException(extension + " files are not currently supported.")
+
 
     @property
     def file_size(self):
+        if self.___source is None or self.___source == "":
+            raise NoDataException("No file not set")
         return getsize(self.___source)
 
     @property
     def file_size_human(self):
-        return self.__sizeofHuman(getsize(self.___source))
+        if self.___source is None or self.___source == "":
+            raise NoDataException("No file not set")
 
     @property
     def date_created(self):
+        if self.___source is None or self.___source == "":
+            raise NoDataException("No file not set")
         return ctime(getctime(self.___source))
 
     @property
     def date_last_modified(self):
+        if self.___source is None or self.___source == "":
+            raise NoDataException("No file not set")
         return ctime(getmtime(self.___source))
 
     @property
@@ -161,7 +168,7 @@ class FileMetadata(object):
             # self._MD5 = self.calculation
             return self._MD5
         else:
-            raise Exception("MD5 not calculated yet")
+            raise NoDataException("MD5 not calculated yet for " + self.___source)
 
     def getXML(self):
         pass
@@ -196,6 +203,8 @@ class FileMetadata(object):
         return self._MD5
 
     def calculate_MD5(self, progress=False, threaded=False):
+        if self.___source is None or self.___source == "":
+            raise NoDataException("No file not set")
         if threaded:
             self._calculation = threading.Thread(target=self._calculate_MD5, args=(progress,))
             self._calculation.daemon = True
@@ -207,9 +216,10 @@ class FileMetadata(object):
 
 
     def calculate_SHA1(self, verbose=False):
+        if self.___source is None or self.___source == "":
+            raise NoDataException("No file not set")
         sha1 = hashlib.sha1()
         total = self.file_size
-
         with open(self.___source,'rb') as f:
             i = float(0)
             for chunk in iter(lambda: f.read(BUFFER), b''):

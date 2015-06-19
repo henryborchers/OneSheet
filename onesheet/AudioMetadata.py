@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 from onesheet.TimeBasedMetadata import TimeBasedMetadata
 from abc import ABCMeta
+from OExceptions import NoDataException
 AUDIO_CODECS = {"8svx_exp": "8SVX",
                     "8svx_fib": "8SVX",
                     "aac": "AAC",
@@ -358,42 +359,63 @@ class AudioMetadata(TimeBasedMetadata):
     def audioBitDepth(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
             if stream.getAttribute("codec_type") == "audio":
-                return int(AUDIO_BIT_DEPTHS[stream.getAttribute("sample_fmt")])
+                data = int(AUDIO_BIT_DEPTHS[stream.getAttribute("sample_fmt")])
+                if data == 0:
+                    raise NoDataException("cannot find the bit depth for " + self.file_name)
+                return data
 
     @property
     def audioChannels(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
                 if stream.getAttribute("codec_type") == "audio":
-                    return int(stream.getAttribute("channels"))
+                    data = int(stream.getAttribute("channels"))
+                    if data == 0:
+                        raise NoDataException("Cannot find any audio channels for " + self.file_name)
+                    return data
 
     @property
     def audioCodec(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
             if stream.getAttribute("codec_type") == "audio":
-                return str(AUDIO_CODECS[stream.getAttribute("codec_name")])
+
+                data = str(AUDIO_CODECS[stream.getAttribute("codec_name")])
+                if data is None or data == "":
+                    raise NoDataException("Cannot find any audio codec for " + self.file_name)
+                return data
 
 
     @property
     def audioCodecLongName(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
             if stream.getAttribute("codec_type") == "audio":
-                return str(stream.getAttribute("codec_long_name"))
-
+                data = str(stream.getAttribute("codec_long_name"))
+                if data is None or data == "":
+                    raise NoDataException("Cannot find any audio codec long name for " + self.file_name)
+                return data
     @property
     def audioSampleRate(self):
         # TODO Make audioSampleRate Method
         for stream in self.xmlDom.getElementsByTagName('stream'):
             if stream.getAttribute("codec_type") == "audio":
-                return int(stream.getAttribute("sample_rate"))
+                data = int(stream.getAttribute("sample_rate"))
+                if data == 0:
+                    raise NoDataException("Cannot find a sample rate for " + self.file_name)
+                return data
 
     @property
     def audioBitRate(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
             if stream.getAttribute("codec_type") == "audio":
-                return int(stream.getAttribute("bit_rate"))
+                data = int(stream.getAttribute("bit_rate"))
+                if data == 0:
+                    raise NoDataException("Cannot find a bit rate for " + self.file_name)
+                return data
 
     @property
     def audioBitRateH(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
             if stream.getAttribute("codec_type") == "audio":
-                return self.__sizeofHuman(int(stream.getAttribute("bit_rate")))
+                data = self.__sizeofHuman(int(stream.getAttribute("bit_rate")))
+                if data is None or data == "":
+                    raise NoDataException("Cannot find a bit rate for " + self.file_name)
+                return data

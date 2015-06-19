@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 from re import search
+from onesheet.OExceptions import NoDataException
 from onesheet.TimeBasedMetadata import TimeBasedMetadata
 from abc import ABCMeta
 
@@ -83,18 +84,21 @@ class VideoMetadata(TimeBasedMetadata):
     def videoColorSampling(self):
         # TODO Make VideoColorSampling method useful
         for stream in self.xmlDom.getElementsByTagName('stream'):
-                if stream.getAttribute("codec_type") == "video":
-                    if stream.getAttribute("codec_long_name") == "Uncompressed 4:2:2 10-bit":
-                        return '4:2:2'
-                    else:
-                        return 'unknown'
+            if stream.getAttribute("codec_type") == "video":
+                if stream.getAttribute("codec_long_name") == "Uncompressed 4:2:2 10-bit":
+                    return '4:2:2'
+                else:
+                    return 'unknown'
         pass
 
     @property
     def videoBitRate(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
                 if stream.getAttribute("codec_type") == "video":
-                    return int(stream.getAttribute("bit_rate"))
+                    data = int(stream.getAttribute("bit_rate"))
+                    if data == 0:
+                        raise NoDataException("Cannot calculate the video bit rate for " + self.file_name)
+                    return data
 
     @property
     def videoBitRateH(self):
@@ -104,26 +108,36 @@ class VideoMetadata(TimeBasedMetadata):
 
     @property
     def videoResolution(self):
-            for stream in self.xmlDom.getElementsByTagName('stream'):
-                if stream.getAttribute("codec_type") == "video":
-                    height = stream.getAttribute("height")
-                    width = stream.getAttribute("width")
-                    return width + " x " + height
+        for stream in self.xmlDom.getElementsByTagName('stream'):
+            if stream.getAttribute("codec_type") == "video":
+                height = stream.getAttribute("height")
+                width = stream.getAttribute("width")
+                if height is None or height == "" or width is None or width == "":
+                    raise NoDataException("Cannot calculate the video resolution for " + self.file_name)
+                return width + " x " + height
 
     @property
     def videoResolutionHeight(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
-                if stream.getAttribute("codec_type") == "video":
-                    return int(stream.getAttribute("height"))
+            if stream.getAttribute("codec_type") == "video":
+                data = int(stream.getAttribute("height"))
+                if data == 0:
+                    raise NoDataException("Cannot calculate the video resolution height for " + self.file_name)
+                return data
 
     @property
     def videoResolutionWidth(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
-                if stream.getAttribute("codec_type") == "video":
-                    return int(stream.getAttribute("width"))
-
+            if stream.getAttribute("codec_type") == "video":
+                data = int(stream.getAttribute("width"))
+                if data == 0:
+                    raise NoDataException("Cannot calculate the video width resolution for " + self.file_name)
+                return data
     @property
     def videoAspectRatio(self):
         for stream in self.xmlDom.getElementsByTagName('stream'):
-                if stream.getAttribute("codec_type") == "video":
-                    return str(stream.getAttribute("display_aspect_ratio"))
+            if stream.getAttribute("codec_type") == "video":
+                data = str(stream.getAttribute("display_aspect_ratio"))
+                if data is None:
+                    raise NoDataException("Cannot calculate the video aspect ratio for " + self.file_name)
+                return data

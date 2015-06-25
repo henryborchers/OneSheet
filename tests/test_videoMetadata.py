@@ -5,7 +5,7 @@ __author__ = 'lpsdesk'
 
 class TestVideoMetadata(TestCase):
     def setUp(self):
-        self.f = VideoMetadata("/Users/lpsdesk/PycharmProjects/PBcore/sample_records/casjhsj_000061/casjhsj_000061_r1_prsv.mov")
+        self.f = VideoMetadata("/Volumes/CAVPPTestDrive/cusb-v1141a.mpg")
 
     def test_getVideoCodec(self):
         self.fail()
@@ -68,10 +68,12 @@ class TestVideoMetadata(TestCase):
         self.assertEqual(self.f.date_last_modified, "Thu Jan 15 11:18:30 2015")
 
     def test_getTotalRunningTimeRaw(self):
-        self.assertEqual(self.f.getTotalRunningTimeRaw(), "ddd")
+        self.assertEqual(self.f.getTotalRunningTimeRaw, "ddd")
 
     def test_getTotalRunningTimeSMPTE(self):
-        self.fail()
+        self.assertEquals(self.f.getTotalRunningTimeSMPTE, "43dgf")
+
+
 
     def test_getTotalSeconds(self):
         self.fail()

@@ -146,6 +146,7 @@ class FileMetadata(object):
     def file_size_human(self):
         if self.___source is None or self.___source == "":
             raise NoDataException("No file not set")
+        return self.__sizeofHuman(self.file_size)
 
     @property
     def date_created(self):

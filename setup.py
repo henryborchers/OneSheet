@@ -30,7 +30,7 @@ except OSError:
 
 setup(
     name='OneSheet',
-    version='0.1.4',
+    version='0.1.4.1',
     description='Easily access metadata for image, video, sound, and document file.',
     long_description=__doc__,
     url='https://github.com/henryborchers/OneSheet',

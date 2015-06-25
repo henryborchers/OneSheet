@@ -1,24 +1,28 @@
 from unittest import TestCase
-from onesheet.AudioMetadata import *
+from onesheet.AudioObject import *
+# import onesheet
 __author__ = 'lpsdesk'
 
 
 class TestAudioMetadata(TestCase):
 
     def setUp(self):
-        f = AudioMetadata("/Users/lpsdesk/PycharmProjects/PBcore/sample_records/casacsh_000048/casacsh_000048_b_prsv.wav")
+        self.f = AudioObject("/Users/lpsdesk/PycharmProjects/audio_convert/ALLEY_B.mp3")
 
     def test_getAudioBitDepth(self):
-        self.fail()
+        self.assertEquals(self.f.audioBitDepth, 16)
+
+    def test_getDuration(self):
+        self.assertEquals(self.f.totalRunningTimeSMPTE, "00:33:20.25")
 
     def test_getAudioChannels(self):
-        self.fail()
+        self.assertEquals(self.f.audioChannels, 2)
 
     def test_getAudioCodec(self):
-        self.fail()
+        self.assertEquals(self.f.audioCodec, 'MP3')
 
     def test_getAudioCodecLongName(self):
-        self.fail()
+        self.assertEquals(self.f.audioCodecLongName, "MP3 (MPEG audio layer 3)")
 
     def test_getAudioSampleRate(self):
-        self.fail()
+        self.assertEquals(self.f.audioSampleRate, 44100)

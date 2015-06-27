@@ -8,9 +8,9 @@ from sys import stdout
 import threading
 from time import ctime, sleep
 from abc import ABCMeta
-import thread
+# import thread
 import sys
-from OExceptions import FormatException, NoDataException
+from onesheet.OExceptions import FormatException, NoDataException
 
 VALID_VIDEO_FILE_EXTENSIONS = ['.avi', '.mov', '.mp4', '.mpeg', '.mpg', '.mkv']
 VALID_AUDIO_FILE_EXTENSIONS = ['.wav', '.mp3', '.ogg']
@@ -227,7 +227,7 @@ class FileMetadata(object):
                 if verbose:
                     i += BUFFER
                     completed = int((i/total)*100)
-                    print str(completed) + "%"
+                    print(str(completed) + "%")
                 sha1.update(chunk)
 
         return sha1.hexdigest()

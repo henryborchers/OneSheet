@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 from onesheet.TimeBasedMetadata import TimeBasedMetadata
 from abc import ABCMeta
-from OExceptions import NoDataException
+from onesheet.OExceptions import NoDataException
 AUDIO_CODECS = {"8svx_exp": "8SVX",
                     "8svx_fib": "8SVX",
                     "aac": "AAC",

@@ -6,7 +6,7 @@ from xml.dom.minidom import parseString
 
 from onesheet.ClassFileMetadata import FileMetadata
 from abc import ABCMeta
-from OExceptions import NoDataException
+from onesheet.OExceptions import NoDataException
 
 
 class TimeBasedMetadata(FileMetadata):
@@ -20,15 +20,17 @@ class TimeBasedMetadata(FileMetadata):
             command = GET_XML_COMMAND
             command.append(self.fileName)
             try:
-                p = Popen(command, stdout=PIPE, stderr=PIPE, bufsize=0)
+                p = Popen(command, stdout=PIPE, stderr=PIPE, bufsize=0, universal_newlines=True)
             except OSError:
                 raise IOError("Unable to read " + self.fileName + " with FFProbe.")
 
             for line in p.stderr.readlines():
-                self.raw_stderr += line
+                self.raw_stderr += str(line)
             self.rawdata = p.communicate()[0]
-            self.fileXML = str(search('(<\?xml).*(</ffprobe>)', self.rawdata, DOTALL).group(0))
+            self.fileXML = str(search('(<\?xml).*(</ffprobe>)', str(self.rawdata), DOTALL).group(0))
+            # print(self.fileXML)
             self.xmlDom = parseString(self.fileXML)
+
 
     @property
     def Rawdata(self):

@@ -398,7 +398,7 @@ class AudioMetadata(TimeBasedMetadata):
         for stream in self.xmlDom.getElementsByTagName('stream'):
             if stream.getAttribute("codec_type") == "audio":
                 data = int(stream.getAttribute("sample_rate"))
-                if data == 0:
+                if data == 0 or data is None:
                     raise NoDataException("Cannot find a sample rate for " + self.file_name)
                 return data
 
@@ -407,7 +407,7 @@ class AudioMetadata(TimeBasedMetadata):
         for stream in self.xmlDom.getElementsByTagName('stream'):
             if stream.getAttribute("codec_type") == "audio":
                 data = int(stream.getAttribute("bit_rate"))
-                if data == 0:
+                if data == 0 or data is None:
                     raise NoDataException("Cannot find a bit rate for " + self.file_name)
                 return data
 

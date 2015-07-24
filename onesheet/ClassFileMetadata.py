@@ -16,7 +16,7 @@ VALID_VIDEO_FILE_EXTENSIONS = ['.avi', '.mov', '.mp4', '.mpeg', '.mpg', '.mkv']
 VALID_AUDIO_FILE_EXTENSIONS = ['.wav', '.mp3', '.ogg']
 VALID_IMAGE_FILE_EXTENSIONS = ['.bmp', '.gif', '.jpg', '.psd', '.tga', '.tif']
 VALID_DOCUMENT_FILE_EXTENSIONS = ['.doc', '.docx', '.pdf', '.txt']
-BUFFER = 8192
+BUFFER = 65536
 
 
 
@@ -62,6 +62,7 @@ class MD5_Generator(threading.Thread):
 class FileMetadata(object):
     __metaclass__ = ABCMeta
 
+    data_lock = threading.Lock()
     def __init__(self, sourcefile):
         if not os.path.exists(sourcefile):
             raise IOError(sourcefile + " not found")
@@ -188,15 +189,15 @@ class FileMetadata(object):
         # while checksum.running == True:
         while checksum.isRunning:
             # print checksum.running
-
             self._calculation_progress = checksum.progress
             if progress == True:
                 # print checksum.progress
-                sleep(.25)
+
                 message = str(self._calculation_progress) + "%"
                 # print(message),
                 sys.stdout.write('\r' + message)
                 sys.stdout.flush()
+                sleep(.1)
         checksum.join()
         if progress == True:
             sys.stdout.write("\r\033[K\r")

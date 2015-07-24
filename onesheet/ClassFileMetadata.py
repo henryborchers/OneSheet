@@ -16,7 +16,7 @@ VALID_VIDEO_FILE_EXTENSIONS = ['.avi', '.mov', '.mp4', '.mpeg', '.mpg', '.mkv']
 VALID_AUDIO_FILE_EXTENSIONS = ['.wav', '.mp3', '.ogg']
 VALID_IMAGE_FILE_EXTENSIONS = ['.bmp', '.gif', '.jpg', '.psd', '.tga', '.tif']
 VALID_DOCUMENT_FILE_EXTENSIONS = ['.doc', '.docx', '.pdf', '.txt']
-BUFFER = 65536
+BUFFER = 128*512
 
 
 
@@ -50,10 +50,13 @@ class MD5_Generator(threading.Thread):
         with open(self.file, 'rb') as f:
             i = float(0)
 
-            for chunk in iter(lambda: f.read(BUFFER), b''):
+            for index, chunk in enumerate(iter(lambda: f.read(BUFFER), b'')):
                 i += BUFFER
-                self.completed = int((i/self.total)*100)
+                # self.completed = int((i/self.total)*100)
+                percentage = i/self.total
+                self.completed = percentage * 100
                 self.md5.update(chunk)
+            self.completed = 100
 
         self.isRunning = False
 
@@ -62,7 +65,7 @@ class MD5_Generator(threading.Thread):
 class FileMetadata(object):
     __metaclass__ = ABCMeta
 
-    data_lock = threading.Lock()
+    # data_lock = threading.Lock()
     def __init__(self, sourcefile):
         if not os.path.exists(sourcefile):
             raise IOError(sourcefile + " not found")
@@ -189,6 +192,7 @@ class FileMetadata(object):
         # while checksum.running == True:
         while checksum.isRunning:
             # print checksum.running
+            sleep(.01)
             self._calculation_progress = checksum.progress
             if progress == True:
                 # print checksum.progress
@@ -197,7 +201,7 @@ class FileMetadata(object):
                 # print(message),
                 sys.stdout.write('\r' + message)
                 sys.stdout.flush()
-                sleep(.1)
+                # sleep(.1)
         checksum.join()
         if progress == True:
             sys.stdout.write("\r\033[K\r")

@@ -61,6 +61,7 @@ class MD5_Generator(threading.Thread):
 
 class FileMetadata(object):
     __metaclass__ = ABCMeta
+
     def __init__(self, sourcefile):
         if not os.path.exists(sourcefile):
             raise IOError(sourcefile + " not found")
@@ -187,10 +188,11 @@ class FileMetadata(object):
         # while checksum.running == True:
         while checksum.isRunning:
             # print checksum.running
-            sleep(.25)
+
             self._calculation_progress = checksum.progress
             if progress == True:
                 # print checksum.progress
+                sleep(.25)
                 message = str(self._calculation_progress) + "%"
                 # print(message),
                 sys.stdout.write('\r' + message)

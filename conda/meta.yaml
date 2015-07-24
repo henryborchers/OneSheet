@@ -13,7 +13,10 @@ source:
 build:
   number: 1
   string: a
-
+#  no_link:
+#    - bin/ffprobe
+#  always_include_files:
+#    - bin/ffprobe
   # noarch_python: True
   # preserve_egg_dir: True
   # entry_points:
@@ -33,10 +36,7 @@ requirements:
   build:
     - python
     - setuptools
-  no_link:
-    - bin/ffprobe
-  always_include_files:
-    - bin/ffprobe
+
 
   run:
     - python

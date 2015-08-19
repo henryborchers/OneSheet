@@ -12,7 +12,7 @@ from abc import ABCMeta
 import sys
 from onesheet.OExceptions import FormatException, NoDataException
 
-VALID_VIDEO_FILE_EXTENSIONS = ['.avi', '.mov', '.mp4', '.mpeg', '.mpg', '.mkv']
+VALID_VIDEO_FILE_EXTENSIONS = ['.avi', '.mov', '.mp4', '.mpeg', '.mpg', '.mkv', '.dv']
 VALID_AUDIO_FILE_EXTENSIONS = ['.wav', '.mp3', '.ogg']
 VALID_IMAGE_FILE_EXTENSIONS = ['.bmp', '.gif', '.jpg', '.psd', '.tga', '.tif']
 VALID_DOCUMENT_FILE_EXTENSIONS = ['.doc', '.docx', '.pdf', '.txt']
